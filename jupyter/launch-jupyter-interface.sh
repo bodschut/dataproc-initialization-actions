@@ -65,7 +65,7 @@ CHROME_APP_PATH="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 # https://cloud.google.com/dataproc/cluster-web-interfaces
 # 1. Setup ssh tunnel and socks proxy
 ZONE_FLAG=""
-[[ -v ZONE ]] && ZONE_FLAG="--zone=$ZONE"
+ZONE_FLAG="--zone=$ZONE"
 gcloud compute ssh $ZONE_FLAG --ssh-flag="-D 10000" --ssh-flag="-N" --ssh-flag="-n" "$DATAPROC_CLUSTER_NAME-m" &
 sleep 5 # Wait for tunnel to be ready before opening browser...
 
