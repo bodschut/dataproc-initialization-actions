@@ -39,6 +39,10 @@ if [[ "${ROLE}" == 'Master' ]]; then
     ./dataproc-initialization-actions/jupyter/internal/setup-jupyter-kernel.sh
     ./dataproc-initialization-actions/jupyter/internal/launch-jupyter-kernel.sh
 fi
+conda install numpy
+conda install scipy
+conda install scikit-learn
+pip install spark-sklearn
 echo "Completed installing Jupyter!"
 
 # Install Jupyter extensions (if desired)
