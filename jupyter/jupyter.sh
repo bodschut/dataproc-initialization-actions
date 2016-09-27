@@ -20,15 +20,20 @@ git clone -b "$INIT_ACTIONS_BRANCH" --single-branch $INIT_ACTIONS_REPO
 
 source /etc/profile.d/conda.sh
 
+
 if [ -n "${JUPYTER_CONDA_CHANNELS}" ]; then
   echo "Adding custom conda channels '$(echo ${JUPYTER_CONDA_CHANNELS} | tr ':' ' ')'"
   conda config --add channels $(echo ${JUPYTER_CONDA_CHANNELS} | tr ':' ',')
 fi
 
+
 if [ -n "${JUPYTER_CONDA_PACKAGES}" ]; then
   echo "Installing custom conda packages '$(echo ${JUPYTER_CONDA_PACKAGES} | tr ':' ' ')'"
   conda install $(echo ${JUPYTER_CONDA_PACKAGES} | tr ':' ' ')
 fi
+
+PIP_PACKAGES = 'spark-sklearn'
+pip install $(echo ${PIP_PACKAGES})
 
 if [[ "${ROLE}" == 'Master' ]]; then
     conda install jupyter
@@ -39,10 +44,6 @@ if [[ "${ROLE}" == 'Master' ]]; then
     ./dataproc-initialization-actions/jupyter/internal/setup-jupyter-kernel.sh
     ./dataproc-initialization-actions/jupyter/internal/launch-jupyter-kernel.sh
 fi
-conda install numpy
-conda install scipy
-conda install scikit-learn
-pip install spark-sklearn
 echo "Completed installing Jupyter!"
 
 # Install Jupyter extensions (if desired)
@@ -57,4 +58,3 @@ then
     ./dataproc-initialization-actions/jupyter/internal/bootstrap-jupyter-ext.sh
     echo "Jupyter Notebook extensions installed!"
 fi
-
