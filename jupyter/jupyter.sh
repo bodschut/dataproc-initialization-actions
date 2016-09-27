@@ -20,12 +20,10 @@ git clone -b "$INIT_ACTIONS_BRANCH" --single-branch $INIT_ACTIONS_REPO
 
 source /etc/profile.d/conda.sh
 
-
 if [ -n "${JUPYTER_CONDA_CHANNELS}" ]; then
   echo "Adding custom conda channels '$(echo ${JUPYTER_CONDA_CHANNELS} | tr ':' ' ')'"
   conda config --add channels $(echo ${JUPYTER_CONDA_CHANNELS} | tr ':' ',')
 fi
-
 
 if [ -n "${JUPYTER_CONDA_PACKAGES}" ]; then
   echo "Installing custom conda packages '$(echo ${JUPYTER_CONDA_PACKAGES} | tr ':' ' ')'"
