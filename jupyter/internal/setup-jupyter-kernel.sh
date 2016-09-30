@@ -36,4 +36,3 @@ jupyter kernelspec install $JUPYTER_KERNEL_DIR
 echo "c.MappingKernelManager.default_kernel_name = 'pyspark'" >> ~/.jupyter/jupyter_notebook_config.py
 
 echo "Jupyter setup!"
-
