@@ -4,7 +4,24 @@ set -e
 DIR="${BASH_SOURCE%/*}"
 [[ ! -d "$DIR" ]] && DIR="$PWD"
 
-source "$DIR/../util/utils.sh"
+function_exists () {
+    declare -f -F $1 > /dev/null
+    return $?
+}
+
+throw () {
+    echo "$*" >&2
+    echo
+    function_exists usage && usage
+    exit 1
+}
+
+get_metadata_property () {
+    [[ -z $1 ]] && throw "missing function param for DATAPROC_CLUSTER_NAME" || DATAPROC_CLUSTER_NAME=$1
+    [[ -z $2 ]] && throw "missing function param for METADATA_KEY" || METADATA_KEY=$2
+    # Get $DATAPROC_CLUSTER_NAME metadata value for key $METADATA_KEY...
+    gcloud dataproc clusters describe $DATAPROC_CLUSTER_NAME | python -c "import sys,yaml; cluster = yaml.load(sys.stdin); print(cluster['config']['gceClusterConfig']['metadata']['$METADATA_KEY'])"
+}
 
 function usage {
     echo "Creates an SSH tunnel and socks proxy and launches Chrome, using the environment "
@@ -43,7 +60,8 @@ done
 
 [[ -z $DATAPROC_CLUSTER_NAME ]] && usage
 [[ -z $ZONE ]] && usage
-JUPYTER_PORT=$(get_metadata_property $DATAPROC_CLUSTER_NAME JUPYTER_PORT)
+#JUPYTER_PORT=$(get_metadata_property $DATAPROC_CLUSTER_NAME JUPYTER_PORT)
+JUPYTER_PORT=8123
 [[ ! $JUPYTER_PORT =~ ^[0-9]+$ ]] && throw "metadata must contain a valid 'JUPYTER_PORT' value, but instead has the value \"$JUPYTER_PORT\""
 
 # TODO: Ensure that Jupyter notebook is running on cluster master node
