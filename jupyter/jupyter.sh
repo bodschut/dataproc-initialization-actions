@@ -40,6 +40,12 @@ if [[ "${ROLE}" == 'Master' ]]; then
         gsutil -m cp -r gs://$DATAPROC_BUCKET/notebooks /root/
     fi
     ./dataproc-initialization-actions/jupyter/internal/setup-jupyter-kernel.sh
+
+    # install apache toree for scala kernel
+    pip install --pre --user toree
+    export PATH=$HOME/.local/bin:$PATH
+    jupyter toree install --user --spark_home=/usr/lib/spark
+
     ./dataproc-initialization-actions/jupyter/internal/launch-jupyter-kernel.sh
 fi
 echo "Completed installing Jupyter!"
