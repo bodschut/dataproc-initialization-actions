@@ -42,9 +42,9 @@ if [[ "${ROLE}" == 'Master' ]]; then
     ./dataproc-initialization-actions/jupyter/internal/setup-jupyter-kernel.sh
 
     # install apache toree for scala kernel
-    pip install --pre --user toree
-    export PATH=$HOME/.local/bin:$PATH
-    jupyter toree install --user --spark_home=/usr/lib/spark
+    # pip install --pre --user toree
+    # export PATH=$HOME/.local/bin:$PATH
+    # jupyter toree install --user --spark_home=/usr/lib/spark
 
     ./dataproc-initialization-actions/jupyter/internal/launch-jupyter-kernel.sh
 fi
