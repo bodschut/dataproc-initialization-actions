@@ -1,4 +1,4 @@
-<#!/usr/bin/env bash
+#!/usr/bin/env bash
 set -e
 
 ROLE=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/dataproc-role)
