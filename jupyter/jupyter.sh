@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+<#!/usr/bin/env bash
 set -e
 
 ROLE=$(curl -f -s -H Metadata-Flavor:Google http://metadata/computeMetadata/v1/instance/attributes/dataproc-role)
@@ -30,7 +30,7 @@ if [ -n "${JUPYTER_CONDA_PACKAGES}" ]; then
   conda install $(echo ${JUPYTER_CONDA_PACKAGES} | tr ':' ' ')
 fi
 
-PIP_PACKAGES = 'spark-sklearn'
+PIP_PACKAGES = 'spark-sklearn google-api-python-client google-cloud'
 pip install $(echo ${PIP_PACKAGES})
 
 if [[ "${ROLE}" == 'Master' ]]; then
