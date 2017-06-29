@@ -30,7 +30,7 @@ if [ -n "${JUPYTER_CONDA_PACKAGES}" ]; then
   conda install $(echo ${JUPYTER_CONDA_PACKAGES} | tr ':' ' ')
 fi
 
-PIP_PACKAGES = 'spark-sklearn google-api-python-client google-cloud'
+PIP_PACKAGES='spark-sklearn google-api-python-client google-cloud'
 pip install $(echo ${PIP_PACKAGES})
 
 if [[ "${ROLE}" == 'Master' ]]; then
